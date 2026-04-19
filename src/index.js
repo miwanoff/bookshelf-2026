@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import ReactDOM from 'react-dom/client';
 import booksData from "./books.js";
 
@@ -12,9 +12,16 @@ import booksData from "./books.js";
 // }
 
 const App = () => {
+  const [books, setBooks] = useState(booksData);
   return (
     <div>
-      <h4>{booksData[0].name}</h4>
+     {books.map((book) => {
+        return (
+          <div key={book.id}>
+            <p>{book.name}</p>
+          </div>
+        );
+      })}
     </div>
   );
 };
