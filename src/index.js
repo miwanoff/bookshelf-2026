@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom/client";
 import booksData from "./books.js";
+import logo from "./logo.svg";
 
 // function Hello() {
 //   return (
@@ -11,11 +12,26 @@ import booksData from "./books.js";
 //   );
 // }
 
+const Image = (props) => {
+  return <img src={props.src} alt="logo" style={{ width: "150px" }} />;
+};
+
+const Header = (props) => {
+  return (
+    <div className={props.className}>
+      <Image src={logo} />
+      <h1>Книжковий магазин</h1>
+    </div>
+  );
+}
+
+
 const App = () => {
   const [books, setBooks] = useState(booksData);
   return (
     <div>
-     {books.map((book) => {
+      <Header className="header" />
+      {books.map((book) => {
         return (
           <div key={book.id}>
             <p>{book.name}</p>
@@ -26,9 +42,5 @@ const App = () => {
   );
 };
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <App />
-);
-
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
