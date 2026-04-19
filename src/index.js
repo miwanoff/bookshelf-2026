@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import booksData from "./books.js";
 import logo from "./logo.svg";
+import BookItem from "./BookItem.jsx";
 
 // function Hello() {
 //   return (
@@ -40,8 +41,7 @@ const App = () => {
       {books.map((book) => {
         return (
           <div key={book.id}>
-            <h4>{book.name}</h4>
-            <button onClick={() => removeBook(book)}>Delete</button>
+            <BookItem book={book} removeBook={removeBook} />
           </div>
         );
       })}
