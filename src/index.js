@@ -28,13 +28,20 @@ const Header = (props) => {
 
 const App = () => {
   const [books, setBooks] = useState(booksData);
+
+  const removeBook = (book) => {
+    const updatedBooks = books.filter((item) => item.id !== book.id);
+    setBooks(updatedBooks);
+  };
+
   return (
     <div>
       <Header className="header" />
       {books.map((book) => {
         return (
           <div key={book.id}>
-            <p>{book.name}</p>
+            <h4>{book.name}</h4>
+            <button onClick={() => removeBook(book)}>Delete</button>
           </div>
         );
       })}
