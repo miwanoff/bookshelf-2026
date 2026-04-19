@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import booksData from "./books.js";
-import logo from "./logo.svg";
+
 import BookItem from "./BookItem.jsx";
+
+import Image from "./Image.jsx";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import logo from "./logo.svg";
 // function Hello() {
 //   return (
 //     <div>
@@ -15,19 +17,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //   );
 // }
 
-const Image = (props) => {
-  return <img src={props.src} alt="logo" style={{ width: "150px" }} />;
-};
-
 const Header = (props) => {
   return (
     <div className={props.className}>
       <Image src={logo} />
-      <h1 className ="display-2">Книжковий магазин</h1>
+      <h1 className="display-2">Книжковий магазин</h1>
     </div>
   );
-}
-
+};
 
 const App = () => {
   const [books, setBooks] = useState(booksData);
@@ -55,7 +52,6 @@ const App = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
