@@ -72,6 +72,24 @@ const App = () => {
     setBooks(updatedBooks);
   };
 
+  const Sum = ({ goods }) => {
+    // Використовуємо reduce для підрахунку загальної вартості
+    const totalSum = goods.reduce((acc, book) => {
+      // Видаляємо перший символ (валюту) та множимо на кількість
+      const price = parseFloat(book.price.slice(1));
+      return acc + price * book.count;
+    }, 0);
+
+    return <div> Сумарна вартість: {totalSum.toFixed(2)} </div>;
+  };
+
+  const Count = ({ goods }) => {
+    // Підраховуємо загальну кількість усіх книг (суму всіх count)
+    const totalCount = goods.reduce((acc, book) => acc + book.count, 0);
+
+    return <div> Кількість книг у кошику: {totalCount} </div>;
+  };
+
   return (
     <div>
       <Header className="container-fluid p-5 bg-dark text-primary text-center" />
@@ -122,6 +140,17 @@ const App = () => {
           </li>
         ))}
       </ul>
+      <div className="row">
+        <div className="col-12">
+          <Count goods={cart} />
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-12">
+          <Sum goods={cart} />
+        </div>
+      </div>
     </div>
   );
 };
