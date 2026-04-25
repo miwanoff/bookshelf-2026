@@ -6,6 +6,7 @@ import booksData from "./books.js";
 import BookItem from "./BookItem.jsx";
 import Image from "./Image.jsx";
 import SearchPanel from "./SearchPanel.jsx";
+import SortPanel from "./SortPanel.jsx";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -56,7 +57,6 @@ const App = () => {
       return item.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
     });
   };
-
 
   const sortBook = (items, isChecked) => {
     const sorted = [...items];
@@ -136,6 +136,7 @@ const App = () => {
       <div className="row">
         <div className="search-panel col-4 my-3">
           <SearchPanel onUpdateSearch={(val) => setTerm(val)} />
+            <SortPanel isChecked={isChecked} onToggleSort={(val) => setIsChecked(val)} />
         </div>
       </div>
       <div className="container-fluid text-center">
