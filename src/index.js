@@ -7,6 +7,7 @@ import BookItem from "./BookItem.jsx";
 import Image from "./Image.jsx";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./books.css";
 import logo from "./logo.svg";
 // function Hello() {
 //   return (
