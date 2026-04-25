@@ -33,13 +33,38 @@ const App = () => {
   const addBookToCart = (book) => {
     // Використовуємо оператор spread (...), щоб створити новий масив
     // і додати новий елемент в кінець
-    setCart([...cart, book]);
+    //setCart([...cart, book]);
+    setCart((prevCart) => {
+      // Перевіряємо, чи є вже така книга в кошику
+      const isBookInCart = prevCart.find((item) => item.id === book.id);
+
+      if (!isBookInCart) {
+        // Якщо книги немає, додаємо її в масив і встановлюємо count: 1
+        return [...prevCart, { ...book, count: 1 }];
+      } else {
+        // Якщо книга вже є, створюємо новий масив, де у потрібної книги збільшено count
+        return prevCart.map((item) =>
+          item.id === book.id ? { ...item, count: item.count + 1 } : item,
+        );
+      }
+    });
   };
 
   const deleteBookFromCart = (book) => {
     // Filter повертає новий масив, тому тут все просто
-    const updatedCart = cart.filter((item) => item.id !== book.id);
-    setCart(updatedCart);
+    //const updatedCart = cart.filter((item) => item.id !== book.id);
+    //setCart(updatedCart);
+    setCart((prevCart) => {
+      if (book.count === 1) {
+        // Якщо книга одна — видаляємо її з масиву
+        return prevCart.filter((item) => item.id !== book.id);
+      } else {
+        // Якщо книг більше, створюємо новий масив, де зменшуємо count для потрібної книги
+        return prevCart.map((item) =>
+          item.id === book.id ? { ...item, count: item.count - 1 } : item,
+        );
+      }
+    });
   };
 
   const removeBook = (book) => {
@@ -77,8 +102,12 @@ const App = () => {
           <li key={book.id} className="list-group-item">
             <div className="row">
               <div className="col-4">{book.name}</div>
-              <div className="col-3">{book.author}</div>
-              <div className="col-2">{book.price}</div>
+              <div className="col-2">{book.author}</div>
+              <div className="col-1">{book.price}</div>
+              <div className="col-1">
+                <span className="badge bg-secondary">К-сть: {book.count}</span>
+              </div>
+
               <div className="col-3">
                 <button
                   /* Замінюємо .bind(this, book) на просту стрілочну функцію */
