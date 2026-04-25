@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
+
 import booksData from "./books.js";
 
 import BookItem from "./BookItem.jsx";
-
 import Image from "./Image.jsx";
+import SearchPanel from "./SearchPanel.jsx";
+
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./books.css";
 import logo from "./logo.svg";
 // function Hello() {
@@ -28,15 +31,44 @@ const Header = (props) => {
 };
 
 const App = () => {
+  // 1. Стан для книжок
   const [books, setBooks] = useState(booksData);
+
+  // 2. Стан для корзини
   const [cart, setCart] = useState(() => {
     const tempInfo = localStorage.getItem("books");
     return tempInfo ? JSON.parse(tempInfo) : [];
   });
 
-  useEffect(() => {
+   useEffect(() => {
     localStorage.setItem("books", JSON.stringify(cart));
   }, [cart]); // Цей ефект спрацює щоразу, коли зміниться масив cart
+
+  // 3. Стан для пошукового запиту (term)
+  const [term, setTerm] = useState("");
+
+  // 4. Стан для сортування
+  const [isChecked, setIsChecked] = useState(false);
+
+   const searchBook = (items, term) => {
+    if (term.length === 0) return items;
+    return items.filter((item) => {
+      return item.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+    });
+  };
+
+
+  const sortBook = (items, isChecked) => {
+    const sorted = [...items];
+    if (isChecked) {
+      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return sorted.sort((a, b) => a.id - b.id);
+  };
+
+
+  const visibleBooks = sortBook(searchBook(books, term), isChecked);
+
 
   const addBookToCart = (book) => {
     // Використовуємо оператор spread (...), щоб створити новий масив
@@ -101,9 +133,14 @@ const App = () => {
   return (
     <div>
       <Header className="container-fluid p-5 bg-dark text-primary text-center" />
+      <div className="row">
+        <div className="search-panel col-4 my-3">
+          <SearchPanel onUpdateSearch={(val) => setTerm(val)} />
+        </div>
+      </div>
       <div className="container-fluid text-center">
         <div className="row justify-content-center">
-          {books.map((book) => {
+          {visibleBooks.map((book) => {
             return (
               <div className="col-sm-4 col-12" key={book.id}>
                 <div className="card text-center my-5 p-3">
