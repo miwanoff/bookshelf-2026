@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import booksData from "./books.js";
 
@@ -29,7 +29,14 @@ const Header = (props) => {
 
 const App = () => {
   const [books, setBooks] = useState(booksData);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const tempInfo = localStorage.getItem("books");
+    return tempInfo ? JSON.parse(tempInfo) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("books", JSON.stringify(cart));
+  }, [cart]); // Цей ефект спрацює щоразу, коли зміниться масив cart
 
   const addBookToCart = (book) => {
     // Використовуємо оператор spread (...), щоб створити новий масив
