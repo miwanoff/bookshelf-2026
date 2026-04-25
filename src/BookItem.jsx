@@ -17,6 +17,12 @@ const BookItem = (props) => {
         >
           Delete
         </button>
+        <button
+          onClick={() => props.addBookToCart(props.book)}
+          className="btn btn-warning mx-1"
+        >
+          Buy
+        </button>
       </div>
     </div>
   );
